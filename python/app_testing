@@ -1,0 +1,30 @@
+#Writing and running automated tests for software applications:
+#Example using unittest:
+
+import unittest
+
+class TestMathFunctions(unittest.TestCase):
+
+    def test_addition(self):
+        self.assertEqual(1 + 1, 2)
+
+    def test_subtraction(self):
+        self.assertEqual(3 - 1, 2)
+
+    def test_multiplication(self):
+        self.assertEqual(2 * 2, 4)
+
+    def test_division(self):
+        self.assertEqual(6 / 2, 3)
+
+if __name__ == '__main__':
+    unittest.main()
+    
+    
+"""
+Explanation:
+We're using the built-in unittest framework for writing and running tests.
+Define test cases as classes inheriting from unittest.TestCase.
+Write individual test methods (e.g., test_addition, test_subtraction).
+Run the tests using unittest.main().
+"""
