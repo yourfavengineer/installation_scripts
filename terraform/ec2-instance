@@ -1,0 +1,57 @@
+# Backend file for my terraform code
+terraform {
+  backend "s3" {
+    bucket = "teraform-bucket-2024"
+    key    = "terraform-backend/"
+    region = "us-east-1"
+  }
+}
+
+# ec2_instance file script for code 
+
+resource "aws_instance" "instance2" {
+    ami = "ami-input"
+    instance_type = "t2.micro"
+    availability_zone = "us-east-1a"
+    key_name = "terraformkey"
+     vpc_security_group_ids = ["sg-0a38c98252e27b4c3"]
+    tags = {
+    Name = "Terraform-instance2"
+  }
+
+
+}
+
+# Provider file for my  cloud provider 
+provider "aws" {
+    region = "us-east-1"
+}
+
+# security group file for resources  if need for sg 
+
+resource "aws_security_group" "dove_stack_sg" {
+  name        = "aws_vpc.dove.id"
+  description = "Allow TLS/SSH for dove traffic"
+  vpc_id      = aws_vpc.dove.id
+
+  ingress {
+    description = "access into VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.MYIP]
+
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_tls"
+  }
+}
